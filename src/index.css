@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* BrandKit360 palette — warm paper, deep navy ink, single vermilion accent */
+    --paper: #f3f1ec;
+    --paper-2: #ebe8e0;
+    --panel: #fbfaf7;
+    --ink: #082d4f;
+    --ink-soft: #39536d;
+    --ink-faint: #7d8ea0;
+    --brand-accent: #e54b32;
+    --accent-deep: #c33a24;
+    --ok: #2e7d5b;
+    --warn: #a86a12;
+    --line: rgba(8, 45, 79, 0.14);
+    --line-strong: rgba(8, 45, 79, 0.32);
+
+    /* shadcn mapping */
+    --background: 40 16% 94%;
+    --foreground: 209 82% 17%;
+    --card: 45 25% 98%;
+    --card-foreground: 209 82% 17%;
+    --popover: 45 25% 98%;
+    --popover-foreground: 209 82% 17%;
+    --primary: 209 82% 17%;
+    --primary-foreground: 40 16% 94%;
+    --secondary: 42 14% 89%;
+    --secondary-foreground: 209 82% 17%;
+    --muted: 42 12% 90%;
+    --muted-foreground: 210 14% 46%;
+    --accent: 9 76% 54%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 30% 85%;
+    --input: 210 30% 82%;
+    --ring: 9 76% 54%;
+    --radius: 0.2rem;
+    --sidebar-background: 45 25% 98%;
+    --sidebar-foreground: 209 82% 17%;
+    --sidebar-primary: 209 82% 17%;
+    --sidebar-primary-foreground: 40 16% 94%;
+    --sidebar-accent: 42 14% 89%;
+    --sidebar-accent-foreground: 209 82% 17%;
+    --sidebar-border: 210 30% 85%;
+    --sidebar-ring: 9 76% 54%;
+
+    /* motion */
+    --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .dark {
+    --background: 209 82% 10%;
+    --foreground: 40 16% 94%;
+    --card: 209 60% 13%;
+    --card-foreground: 40 16% 94%;
+    --popover: 209 60% 13%;
+    --popover-foreground: 40 16% 94%;
+    --primary: 40 16% 94%;
+    --primary-foreground: 209 82% 17%;
+    --secondary: 209 40% 18%;
+    --secondary-foreground: 40 16% 94%;
+    --muted: 209 40% 18%;
+    --muted-foreground: 210 14% 60%;
+    --accent: 9 76% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 209 30% 25%;
+    --input: 209 30% 30%;
+    --ring: 9 76% 58%;
+    --sidebar-background: 209 60% 12%;
+    --sidebar-foreground: 40 16% 94%;
+    --sidebar-primary: 40 16% 94%;
+    --sidebar-primary-foreground: 209 82% 17%;
+    --sidebar-accent: 209 40% 18%;
+    --sidebar-accent-foreground: 40 16% 94%;
+    --sidebar-border: 209 30% 25%;
+    --sidebar-ring: 9 76% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply text-foreground antialiased;
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  ::selection {
+    background: rgba(229, 75, 50, 0.85);
+    color: #fff;
+  }
+  h1, h2, h3 {
+    font-family: 'Fraunces', Georgia, 'Songti SC', serif;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: 'Fraunces', Georgia, serif; }
+  .font-mono-tech { font-family: 'Space Mono', ui-monospace, monospace; }
+
+  /* ---------- Brand Grid motif: signature hairline grid ---------- */
+  .brand-grid-bg {
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .brand-grid-bg-fine {
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  @keyframes grid-pan {
+    to { background-position: 64px 64px; }
+  }
+  .grid-pan {
+    animation: grid-pan 38s linear infinite;
+  }
+
+  /* ---------- Reveal system ---------- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.56s var(--ease-reveal),
+      transform 0.56s var(--ease-reveal);
+    transition-delay: calc(var(--i, 0) * 70ms);
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { transition: none; opacity: 1; transform: none; }
+    .grid-pan { animation: none; }
+  }
+
+  /* ---------- Ambient motion ---------- */
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .float-y { animation: float-y 7s ease-in-out infinite; }
+
+  @keyframes breathe {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(229, 75, 50, 0); }
+    50% { box-shadow: 0 0 0 7px rgba(229, 75, 50, 0.16); }
+  }
+  .breathe { animation: breathe 3.4s ease-in-out infinite; }
+
+  @keyframes tick-in {
+    from { opacity: 0; transform: scaleY(0); }
+    to { opacity: 1; transform: scaleY(1); }
+  }
+
+  @keyframes pipeline-flow {
+    0% { stroke-dashoffset: 24; }
+    100% { stroke-dashoffset: 0; }
+  }
+  .pipeline-flow {
+    stroke-dasharray: 4 8;
+    animation: pipeline-flow 1.2s linear infinite;
+  }
+
+  @keyframes marquee-y {
+    0%, 18% { transform: translateY(0); }
+    25%, 43% { transform: translateY(-1em); }
+    50%, 68% { transform: translateY(-2em); }
+    75%, 93% { transform: translateY(-3em); }
+    100% { transform: translateY(-4em); }
+  }
+  .marquee-y {
+    animation: marquee-y 12s var(--ease-expo) infinite;
+  }
+
+  /* ---------- Buttons: clip-path mask reveal ---------- */
+  .btn-clip {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-clip .btn-mask {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.55s var(--ease-expo);
+  }
+  .btn-clip:hover .btn-mask,
+  .btn-clip:focus-visible .btn-mask {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* ---------- Hairline panel ---------- */
+  .hairline-panel {
+    border: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .hairline-b {
+    border-bottom: 1px solid var(--line);
+  }
+  .hairline-t {
+    border-top: 1px solid var(--line);
+  }
+
+  .sec-marker {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .sec-marker::after {
+    content: '';
+    height: 1px;
+    width: 3rem;
+    background: var(--line-strong);
+  }
+
+  .text-balance { text-wrap: balance; }
+}
+
+/* ---------- Guidelines print export ---------- */
+@media print {
+  body { background: #fff; }
+  aside, header.sticky, .no-print { display: none !important; }
+  .lg\:pl-60 { padding-left: 0 !important; }
+  .guideline-page { border: none !important; box-shadow: none !important; page-break-after: always; }
+}
